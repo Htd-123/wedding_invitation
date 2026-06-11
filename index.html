@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thiệp Cưới – Thanh Hải & Mỹ Duyên</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Great+Vibes&family=Cinzel:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --sage:      #4a7c59;
+  --sage-lt:   #6b9e78;
+  --sage-pale: #c8dfc8;
+  --mint:      #e8f2e8;
+  --mint-deep: #d0e8d0;
+  --white:     #ffffff;
+  --cream:     #f8fdf8;
+  --ivory:     #f4faf4;
+  --gold:      #b8975a;
+  --gold-lt:   #dcc98a;
+  --ink:       #1e3a28;
+  --ink-soft:  #3a5a44;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: radial-gradient(ellipse at 30% 20%, #daeeda 0%, #f0f8f0 40%, #e4f2e4 100%);
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cormorant Garamond', serif;
+  overflow-x: hidden;
+}
+
+/* ── Leaf particles ── */
+.leaf-wrap { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.lf {
+  position: absolute; top: -30px;
+  opacity: 0;
+  animation: falleaf linear infinite;
+}
+.lf svg { display: block; }
+@keyframes falleaf {
+  0%   { transform: translateY(-30px) rotate(0deg) translateX(0px); opacity: 0; }
+  8%   { opacity: 0.55; }
+  92%  { opacity: 0.3; }
+  100% { transform: translateY(108vh) rotate(540deg) translateX(80px); opacity: 0; }
+}
+
+/* ── Envelope stage ── */
+#stage {
+  position: relative; z-index: 10;
+  display: flex; flex-direction: column; align-items: center; gap: 18px;
+  animation: fadeUp 1.2s ease both;
+}
+@keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:none; } }
+
+.hint {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--sage);
+  animation: glow 2.4s ease-in-out infinite;
+}
+@keyframes glow { 0%,100%{opacity:0.45;} 50%{opacity:1;} }
+
+/* envelope */
+.envelope {
+  width: min(340px, 88vw);
+  aspect-ratio: 1.62;
+  position: relative;
+  cursor: pointer;
+  filter: drop-shadow(0 10px 40px rgba(74,124,89,0.25));
+  transition: filter 0.3s, transform 0.2s;
+}
+.envelope:hover { filter: drop-shadow(0 16px 56px rgba(74,124,89,0.38)); transform: translateY(-3px); }
+
+.env-body {
+  width:100%; height:100%;
+  background: linear-gradient(160deg, #f0faf0 0%, var(--ivory) 60%, #e8f4e8 100%);
+  border: 1.5px solid var(--sage-pale);
+  border-radius: 3px 3px 10px 10px;
+  position: relative; overflow: hidden;
+}
+
+.env-preview {
+  position: absolute; bottom: 8%; left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 2;
+}
+.env-preview-text {
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(1rem, 3.5vw, 1.4rem);
+  color: var(--sage);
+  line-height: 1.4;
+}
+
+/* flaps */
+.f-bot {
+  position:absolute; bottom:0; left:0; right:0; height:54%;
+  background: linear-gradient(170deg, #d4ebd4 0%, #c0dac0 100%);
+  clip-path: polygon(0 38%,50% 0,100% 38%,100% 100%,0 100%);
+  z-index: 3;
+}
+.f-left {
+  position:absolute; top:0; left:0; width:50%; height:100%;
+  background: linear-gradient(135deg, #daeeda 0%, #c8dcc8 100%);
+  clip-path: polygon(0 0,100% 38%,100% 100%,0 100%);
+  z-index: 4;
+}
+.f-right {
+  position:absolute; top:0; right:0; width:50%; height:100%;
+  background: linear-gradient(225deg, #daeeda 0%, #c8dcc8 100%);
+  clip-path: polygon(100% 0,0 38%,0 100%,100% 100%);
+  z-index: 4;
+}
+.f-top {
+  position:absolute; top:0; left:0; right:0; height:52%;
+  background: linear-gradient(180deg, #cce0cc 0%, #d8ead8 100%);
+  clip-path: polygon(0 0,100% 0,50% 100%);
+  transform-origin: top center;
+  transition: transform 0.75s cubic-bezier(0.4,0,0.2,1);
+  z-index: 6;
+}
+
+/* seal */
+.seal {
+  position:absolute; top:38%; left:50%;
+  transform: translate(-50%,-50%);
+  width: 50px; height: 50px;
+  background: radial-gradient(circle, var(--gold-lt), var(--gold));
+  border-radius: 50%;
+  border: 1.5px solid #a07840;
+  display:flex; align-items:center; justify-content:center;
+  z-index: 7;
+  box-shadow: 0 2px 12px rgba(184,151,90,0.4);
+  transition: transform 0.35s, opacity 0.35s;
+  font-size: 1.3rem;
+}
+
+/* open animation */
+.envelope.open .f-top { transform: rotateX(180deg); z-index:5; }
+.envelope.open .seal { transform: translate(-50%,-50%) scale(0); opacity:0; }
+.envelope.open .env-preview { animation: riseCard 0.75s 0.45s cubic-bezier(0.22,1,0.36,1) both; }
+
+@keyframes riseCard {
+  from { transform: translateX(-50%) translateY(50%); opacity:0; }
+  to   { transform: translateX(-50%) translateY(-8%); opacity:1; }
+}
+
+/* ── OVERLAY ── */
+#overlay {
+  display:none;
+  position:fixed; inset:0; z-index:100;
+  background: rgba(20,50,30,0.5);
+  backdrop-filter: blur(8px);
+  align-items:center; justify-content:center;
+  padding:12px;
+  overflow-y: auto;
+}
+#overlay.show { display:flex; animation: fadeIn 0.4s ease both; }
+@keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+
+/* ── CARD ── */
+.card {
+  width: min(500px, 97vw);
+  background: var(--white);
+  border-radius: 20px;
+  border: 1px solid var(--sage-pale);
+  box-shadow: 0 32px 100px rgba(20,60,30,0.3);
+  position: relative;
+  animation: cardIn 0.7s cubic-bezier(0.22,1,0.36,1) both;
+  overflow: hidden;
+  margin: auto;
+}
+@keyframes cardIn {
+  from { transform: translateY(50px) scale(0.93); opacity:0; }
+  to   { transform: none; opacity:1; }
+}
+
+/* card top band */
+.card-top-band {
+  background: linear-gradient(135deg, var(--sage) 0%, var(--sage-lt) 100%);
+  padding: clamp(28px,6vw,44px) clamp(20px,5vw,40px) clamp(20px,5vw,36px);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.card-top-band::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 C20 15,10 20,5 30 C10 40,20 45,30 55 C40 45,50 40,55 30 C50 20,40 15,30 5Z' fill='%23ffffff08'/%3E%3C/svg%3E") repeat;
+  pointer-events: none;
+}
+
+.eyebrow {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(0.55rem, 1.5vw, 0.68rem);
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--gold-lt);
+  margin-bottom: 12px;
+}
+
+.names-wrap { position: relative; z-index: 1; }
+.name-groom, .name-bride {
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(2.6rem, 9vw, 4.2rem);
+  color: var(--white);
+  line-height: 1.1;
+  display: block;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.15);
+}
+.amp {
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(1.6rem, 5.5vw, 2.4rem);
+  color: var(--gold-lt);
+  display: block;
+  margin: -4px 0;
+}
+
+.top-ornament { margin-top: 14px; }
+.top-ornament svg { width: clamp(100px,45vw,160px); opacity: 0.7; }
+
+/* card body */
+.card-body { padding: clamp(20px,5vw,36px); }
+
+.section-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase;
+  color: var(--gold); text-align: center;
+  margin-bottom: 6px;
+}
+
+.invite-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(0.95rem, 2.8vw, 1.1rem);
+  font-style: italic;
+  color: var(--ink-soft);
+  text-align: center;
+  line-height: 1.8;
+  margin-bottom: 22px;
+}
+
+/* divider */
+.div-line {
+  display:flex; align-items:center; gap:10px;
+  margin: 18px 0;
+}
+.div-line hr { flex:1; border:none; border-top: 1px solid var(--mint-deep); }
+.div-line span { color:var(--gold); font-size:0.9rem; }
+
+/* date block */
+.date-block {
+  background: linear-gradient(135deg, var(--mint) 0%, var(--ivory) 100%);
+  border: 1px solid var(--sage-pale);
+  border-radius: 14px;
+  padding: clamp(16px,4vw,24px);
+  text-align: center;
+  margin-bottom: 18px;
+}
+.date-num {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(3rem, 12vw, 5rem);
+  color: var(--sage);
+  line-height: 1;
+  font-weight: 500;
+}
+.date-month {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1rem, 3vw, 1.3rem);
+  color: var(--ink-soft);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+.date-time {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(0.7rem, 2vw, 0.82rem);
+  color: var(--gold);
+  letter-spacing: 0.2em;
+  margin-top: 8px;
+}
+
+/* info cards */
+.info-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.info-c {
+  background: var(--ivory);
+  border: 1px solid var(--sage-pale);
+  border-radius: 12px;
+  padding: clamp(12px,3vw,18px) 12px;
+  text-align: center;
+}
+.info-c .ic-ico { font-size: 1.5rem; margin-bottom: 6px; }
+.info-c .ic-lbl {
+  font-family: 'Cinzel', serif;
+  font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--gold); display:block; margin-bottom:4px;
+}
+.info-c .ic-val {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(0.82rem, 2.5vw, 0.95rem);
+  color: var(--ink);
+  line-height: 1.45;
+}
+
+/* map button */
+.map-btn {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  width: 100%;
+  background: var(--sage);
+  color: var(--white);
+  border: none;
+  border-radius: 50px;
+  padding: 13px 20px;
+  font-family: 'Cinzel', serif;
+  font-size: clamp(0.65rem, 2vw, 0.78rem);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
+  box-shadow: 0 4px 20px rgba(74,124,89,0.3);
+  margin-bottom: 20px;
+}
+.map-btn:hover { background: var(--sage-lt); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(74,124,89,0.4); }
+.map-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+/* countdown */
+.countdown-wrap {
+  background: linear-gradient(135deg, var(--sage) 0%, #3d6b4c 100%);
+  border-radius: 14px;
+  padding: clamp(16px,4vw,22px) clamp(12px,3vw,18px);
+  margin-bottom: 18px;
+  position: relative; overflow: hidden;
+}
+.countdown-wrap::before {
+  content:'';
+  position:absolute; inset:0;
+  background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='18' fill='none' stroke='%23ffffff08' stroke-width='1'/%3E%3C/svg%3E") repeat;
+}
+.countdown-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--gold-lt); text-align: center;
+  margin-bottom: 12px;
+}
+.cd-grid {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 8px;
+  position: relative; z-index:1;
+}
+.cd-unit {
+  text-align: center;
+  background: rgba(255,255,255,0.12);
+  border-radius: 10px;
+  padding: 10px 4px;
+  backdrop-filter: blur(4px);
+}
+.cd-num {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.4rem, 5.5vw, 2rem);
+  color: var(--white);
+  font-weight: 500;
+  line-height: 1;
+  display: block;
+}
+.cd-lbl {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(0.6rem, 1.8vw, 0.72rem);
+  color: var(--gold-lt);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-top: 4px;
+  display: block;
+}
+
+/* quote */
+.quote-wrap {
+  text-align: center;
+  padding: 4px 8px 0;
+}
+.quote-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(0.9rem, 2.8vw, 1.05rem);
+  font-style: italic;
+  color: var(--ink-soft);
+  line-height: 1.75;
+}
+.quote-text::before { content: '\201C'; color: var(--sage-pale); font-size: 2.5rem; line-height:0; vertical-align:-0.65rem; margin-right:3px; }
+.quote-text::after  { content: '\201D'; color: var(--sage-pale); font-size: 2.5rem; line-height:0; vertical-align:-0.65rem; margin-left:3px; }
+
+.family-note {
+  font-family: 'Cinzel', serif;
+  font-size: 0.58rem; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--gold); text-align: center;
+  margin-top: 16px;
+}
+
+/* close button */
+.close-btn {
+  position: absolute; top: 12px; right: 12px;
+  width: 34px; height: 34px;
+  background: rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 50%;
+  cursor: pointer;
+  color: white; font-size: 0.85rem;
+  display:flex; align-items:center; justify-content:center;
+  transition: background 0.2s, transform 0.25s;
+  z-index: 10;
+}
+.close-btn:hover { background: rgba(255,255,255,0.35); transform: rotate(90deg); }
+
+/* music button */
+#musicBtn {
+  position: fixed; bottom: 20px; right: 20px; z-index: 200;
+  width: 46px; height: 46px;
+  background: var(--sage);
+  border-radius: 50%;
+  border: none; cursor: pointer;
+  color: white; font-size: 1.2rem;
+  display: none;
+  align-items: center; justify-content: center;
+  box-shadow: 0 4px 20px rgba(74,124,89,0.45);
+  animation: breathe 2.5s ease-in-out infinite;
+  transition: background 0.2s;
+}
+#musicBtn:hover { background: var(--sage-lt); }
+#musicBtn.show { display: flex; }
+@keyframes breathe { 0%,100%{transform:scale(1);} 50%{transform:scale(1.1);} }
+
+@media (max-width: 360px) {
+  .info-row { grid-template-columns: 1fr; }
+  .cd-grid  { grid-template-columns: repeat(2,1fr); }
+}
+</style>
+</head>
+<body>
+
+<div class="leaf-wrap" id="leaves"></div>
+
+<!-- envelope stage -->
+<div id="stage">
+  <p class="hint">✦ Nhấn vào thiệp để mở ✦</p>
+
+  <div class="envelope" id="env" onclick="openEnv()">
+    <div class="env-body">
+      <div class="env-preview">
+        <div class="env-preview-text">Thanh Hải<br>&amp;<br>Mỹ Duyên</div>
+      </div>
+      <div class="f-bot"></div>
+      <div class="f-left"></div>
+      <div class="f-right"></div>
+      <div class="f-top"></div>
+      <div class="seal">🌿</div>
+    </div>
+  </div>
+</div>
+
+<!-- overlay -->
+<div id="overlay" onclick="handleOverlayClick(event)">
+  <div class="card" id="card">
+
+    <!-- green header -->
+    <div class="card-top-band">
+      <button class="close-btn" onclick="closeCard()">✕</button>
+      <div class="eyebrow">— Trân trọng kính mời —</div>
+      <div class="names-wrap">
+        <span class="name-groom">Thanh Hải</span>
+        <span class="amp">&amp;</span>
+        <span class="name-bride">Mỹ Duyên</span>
+      </div>
+      <div class="top-ornament">
+        <svg viewBox="0 0 180 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="0" y1="14" x2="60" y2="14" stroke="rgba(220,201,138,0.6)" stroke-width="0.8"/>
+          <circle cx="72" cy="14" r="3" fill="rgba(220,201,138,0.7)"/>
+          <path d="M90 5 Q96 0 102 5 Q108 10 90 18 Q72 10 78 5 Q84 0 90 5Z" fill="rgba(220,201,138,0.5)"/>
+          <circle cx="108" cy="14" r="3" fill="rgba(220,201,138,0.7)"/>
+          <line x1="120" y1="14" x2="180" y2="14" stroke="rgba(220,201,138,0.6)" stroke-width="0.8"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- body -->
+    <div class="card-body">
+
+      <p class="invite-text">
+        Hai gia đình trân trọng kính mời Quý Vị<br>
+        đến dự tiệc Tân Hôn của chúng tôi
+      </p>
+
+      <!-- date -->
+      <div class="section-label">Ngày trọng đại</div>
+      <div class="date-block">
+        <div class="date-num">15</div>
+        <div class="date-month">Tháng Mười Hai · 2025</div>
+        <div class="date-time">Thứ Bảy &nbsp;·&nbsp; 11:00 Sáng</div>
+      </div>
+
+      <!-- info -->
+      <div class="info-row">
+        <div class="info-c">
+          <div class="ic-ico">🕐</div>
+          <span class="ic-lbl">Giờ tiệc</span>
+          <div class="ic-val">11:00 SA<br>Thứ Bảy</div>
+        </div>
+        <div class="info-c">
+          <div class="ic-ico">📍</div>
+          <span class="ic-lbl">Địa điểm</span>
+          <div class="ic-val">Nhà Hàng Hoa Viên<br>123 Đường Lê Lợi, Q.1</div>
+        </div>
+      </div>
+
+      <!-- map button -->
+      <!-- 🗺️ THAY tọa độ hoặc địa chỉ nhà hàng vào link dưới -->
+      <a class="map-btn"
+         href="https://www.google.com/maps/search/?api=1&query=Nhà+Hàng+Hoa+Viên+123+Lê+Lợi+Quận+1+Hồ+Chí+Minh"
+         target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+        Xem bản đồ địa điểm
+      </a>
+
+      <!-- countdown -->
+      <div class="countdown-wrap">
+        <div class="countdown-label">⏳ Đếm ngược đến ngày cưới</div>
+        <div class="cd-grid">
+          <div class="cd-unit"><span class="cd-num" id="cd-d">--</span><span class="cd-lbl">Ngày</span></div>
+          <div class="cd-unit"><span class="cd-num" id="cd-h">--</span><span class="cd-lbl">Giờ</span></div>
+          <div class="cd-unit"><span class="cd-num" id="cd-m">--</span><span class="cd-lbl">Phút</span></div>
+          <div class="cd-unit"><span class="cd-num" id="cd-s">--</span><span class="cd-lbl">Giây</span></div>
+        </div>
+      </div>
+
+      <div class="div-line"><hr><span>❧</span><hr></div>
+
+      <!-- quote -->
+      <div class="quote-wrap">
+        <p class="quote-text">Tình yêu không phải nhìn nhau, mà cùng nhau nhìn về một hướng</p>
+      </div>
+
+      <p class="family-note">✦ Gia đình hai họ trân trọng kính mời ✦</p>
+
+    </div><!-- /card-body -->
+  </div><!-- /card -->
+</div><!-- /overlay -->
+
+<!-- music toggle -->
+<button id="musicBtn" onclick="toggleMusic()" title="Nhạc nền">♪</button>
+
+<!-- ════════════════════════════════════════
+     🎵 NHẠC NỀN — thay tên file nhạc vào src bên dưới
+     Ví dụ: src="nhac_dam_cuoi.mp3"
+     ════════════════════════════════════════ -->
+<audio id="bgMusic" loop>
+  <source src="./leduong.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+/* ── Leaves ── */
+(function(){
+  const w = document.getElementById('leaves');
+  const colors = ['#6b9e78','#4a7c59','#8ab89a','#a0c8a0'];
+  for(let i=0;i<16;i++){
+    const d = document.createElement('div');
+    d.className='lf';
+    d.style.left = Math.random()*100+'vw';
+    const sz = 8+Math.random()*10;
+    const c = colors[Math.floor(Math.random()*colors.length)];
+    d.innerHTML=`<svg width="${sz}" height="${sz*1.4}" viewBox="0 0 10 14"><path d="M5 1 C2 4,0 8,5 13 C10 8,8 4,5 1Z" fill="${c}" opacity="${0.3+Math.random()*0.3}"/></svg>`;
+    d.style.animationDuration=(7+Math.random()*9)+'s';
+    d.style.animationDelay=(Math.random()*12)+'s';
+    w.appendChild(d);
+  }
+})();
+
+/* ── Envelope ── */
+function openEnv(){
+  document.getElementById('env').classList.add('open');
+  setTimeout(()=>{
+    document.getElementById('overlay').classList.add('show');
+    startMusic();
+  }, 900);
+}
+
+function closeCard(){
+  document.getElementById('overlay').classList.remove('show');
+  // reset envelope so user can click again
+  setTimeout(()=>{
+    document.getElementById('env').classList.remove('open');
+  }, 400);
+}
+
+function handleOverlayClick(e){
+  if(e.target === document.getElementById('overlay')) closeCard();
+}
+
+/* ── Countdown ── */
+// 🗓️ Đổi ngày cưới ở đây: new Date('YYYY-MM-DDTHH:MM:SS')
+const weddingDate = new Date('2026-12-15T11:00:00');
+
+function updateCD(){
+  const now  = new Date();
+  const diff = weddingDate - now;
+  if(diff <= 0){
+    document.getElementById('cd-d').textContent='0';
+    document.getElementById('cd-h').textContent='0';
+    document.getElementById('cd-m').textContent='0';
+    document.getElementById('cd-s').textContent='0';
+    return;
+  }
+  const d = Math.floor(diff/864e5);
+  const h = Math.floor((diff%864e5)/36e5);
+  const m = Math.floor((diff%36e5)/6e4);
+  const s = Math.floor((diff%6e4)/1e3);
+  document.getElementById('cd-d').textContent=String(d).padStart(2,'0');
+  document.getElementById('cd-h').textContent=String(h).padStart(2,'0');
+  document.getElementById('cd-m').textContent=String(m).padStart(2,'0');
+  document.getElementById('cd-s').textContent=String(s).padStart(2,'0');
+}
+updateCD();
+setInterval(updateCD,1000);
+
+/* ── Music ── */
+const audio = document.getElementById('bgMusic');
+const btn   = document.getElementById('musicBtn');
+
+function startMusic(){
+  audio.volume=0.5;
+  audio.play().then(()=>{
+    btn.classList.add('show');
+    btn.textContent='♪';
+  }).catch(()=>{
+    btn.classList.add('show');
+    btn.textContent='♪';
+  });
+}
+
+function toggleMusic(){
+  if(audio.paused){ audio.play(); btn.textContent='♪'; }
+  else            { audio.pause(); btn.textContent='⏸'; }
+}
+</script>
+</body>
+</html>
