@@ -9,31 +9,32 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --sage:      #4a7c59;
-  --sage-lt:   #6b9e78;
-  --sage-pale: #c8dfc8;
-  --mint:      #e8f2e8;
-  --mint-deep: #d0e8d0;
-  --white:     #ffffff;
-  --cream:     #f8fdf8;
-  --ivory:     #f4faf4;
-  --gold:      #b8975a;
-  --gold-lt:   #dcc98a;
-  --ink:       #1e3a28;
-  --ink-soft:  #3a5a44;
+  --brown:      #6b3f2a;
+  --brown-lt:   #8b5a3c;
+  --brown-pale: #d4b8a8;
+  --latte:      #f5ede6;
+  --latte-deep: #e8d5c4;
+  --white:      #ffffff;
+  --cream:      #fdf8f3;
+  --ivory:      #faf4ed;
+  --gold:       #c9962a;
+  --gold-lt:    #e8c060;
+  --gold-deep:  #a07820;
+  --ink:        #2e1a0e;
+  --ink-soft:   #5a3520;
 }
 
 html { scroll-behavior: smooth; }
 
 body {
-  background: radial-gradient(ellipse at 30% 20%, #daeeda 0%, #f0f8f0 40%, #e4f2e4 100%);
+  background: radial-gradient(ellipse at 30% 20%, #c9b09a 0%, #d9c4b0 40%, #c8b098 100%);
   min-height: 100vh;
   display: flex; align-items: center; justify-content: center;
   font-family: 'Cormorant Garamond', serif;
   overflow-x: hidden;
 }
 
-/* ── Leaf particles ── */
+/* ── Petal particles ── */
 .leaf-wrap { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
 .lf {
   position: absolute; top: -30px;
@@ -43,8 +44,8 @@ body {
 .lf svg { display: block; }
 @keyframes falleaf {
   0%   { transform: translateY(-30px) rotate(0deg) translateX(0px); opacity: 0; }
-  8%   { opacity: 0.55; }
-  92%  { opacity: 0.3; }
+  8%   { opacity: 0.5; }
+  92%  { opacity: 0.25; }
   100% { transform: translateY(108vh) rotate(540deg) translateX(80px); opacity: 0; }
 }
 
@@ -59,7 +60,7 @@ body {
 .hint {
   font-family: 'Cinzel', serif;
   font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase;
-  color: var(--sage);
+  color: var(--brown);
   animation: glow 2.4s ease-in-out infinite;
 }
 @keyframes glow { 0%,100%{opacity:0.45;} 50%{opacity:1;} }
@@ -70,15 +71,15 @@ body {
   aspect-ratio: 1.62;
   position: relative;
   cursor: pointer;
-  filter: drop-shadow(0 10px 40px rgba(74,124,89,0.25));
+  filter: drop-shadow(0 10px 40px rgba(107,63,42,0.25));
   transition: filter 0.3s, transform 0.2s;
 }
-.envelope:hover { filter: drop-shadow(0 16px 56px rgba(74,124,89,0.38)); transform: translateY(-3px); }
+.envelope:hover { filter: drop-shadow(0 16px 56px rgba(107,63,42,0.38)); transform: translateY(-3px); }
 
 .env-body {
   width:100%; height:100%;
-  background: linear-gradient(160deg, #f0faf0 0%, var(--ivory) 60%, #e8f4e8 100%);
-  border: 1.5px solid var(--sage-pale);
+  background: linear-gradient(160deg, #e8d8c4 0%, #dfc8b0 60%, #d4b89a 100%);
+  border: 1.5px solid var(--brown-pale);
   border-radius: 3px 3px 10px 10px;
   position: relative; overflow: hidden;
 }
@@ -92,32 +93,32 @@ body {
 .env-preview-text {
   font-family: 'Great Vibes', cursive;
   font-size: clamp(1rem, 3.5vw, 1.4rem);
-  color: var(--sage);
+  color: var(--brown);
   line-height: 1.4;
 }
 
 /* flaps */
 .f-bot {
   position:absolute; bottom:0; left:0; right:0; height:54%;
-  background: linear-gradient(170deg, #d4ebd4 0%, #c0dac0 100%);
+  background: linear-gradient(170deg, #b8906a 0%, #a07050 100%);
   clip-path: polygon(0 38%,50% 0,100% 38%,100% 100%,0 100%);
   z-index: 3;
 }
 .f-left {
   position:absolute; top:0; left:0; width:50%; height:100%;
-  background: linear-gradient(135deg, #daeeda 0%, #c8dcc8 100%);
+  background: linear-gradient(135deg, #c8a080 0%, #b08860 100%);
   clip-path: polygon(0 0,100% 38%,100% 100%,0 100%);
   z-index: 4;
 }
 .f-right {
   position:absolute; top:0; right:0; width:50%; height:100%;
-  background: linear-gradient(225deg, #daeeda 0%, #c8dcc8 100%);
+  background: linear-gradient(225deg, #c8a080 0%, #b08860 100%);
   clip-path: polygon(100% 0,0 38%,0 100%,100% 100%);
   z-index: 4;
 }
 .f-top {
   position:absolute; top:0; left:0; right:0; height:52%;
-  background: linear-gradient(180deg, #cce0cc 0%, #d8ead8 100%);
+  background: linear-gradient(180deg, #a07050 0%, #b88860 100%);
   clip-path: polygon(0 0,100% 0,50% 100%);
   transform-origin: top center;
   transition: transform 0.75s cubic-bezier(0.4,0,0.2,1);
@@ -131,10 +132,10 @@ body {
   width: 50px; height: 50px;
   background: radial-gradient(circle, var(--gold-lt), var(--gold));
   border-radius: 50%;
-  border: 1.5px solid #a07840;
+  border: 1.5px solid var(--gold-deep);
   display:flex; align-items:center; justify-content:center;
   z-index: 7;
-  box-shadow: 0 2px 12px rgba(184,151,90,0.4);
+  box-shadow: 0 2px 12px rgba(201,150,42,0.45);
   transition: transform 0.35s, opacity 0.35s;
   font-size: 1.3rem;
 }
@@ -153,7 +154,7 @@ body {
 #overlay {
   display:none;
   position:fixed; inset:0; z-index:100;
-  background: rgba(20,50,30,0.5);
+  background: rgba(30,12,4,0.55);
   backdrop-filter: blur(8px);
   align-items:center; justify-content:center;
   padding:12px;
@@ -167,8 +168,8 @@ body {
   width: min(500px, 97vw);
   background: var(--white);
   border-radius: 20px;
-  border: 1px solid var(--sage-pale);
-  box-shadow: 0 32px 100px rgba(20,60,30,0.3);
+  border: 1px solid var(--brown-pale);
+  box-shadow: 0 32px 100px rgba(40,15,5,0.35);
   position: relative;
   animation: cardIn 0.7s cubic-bezier(0.22,1,0.36,1) both;
   overflow: hidden;
@@ -181,7 +182,7 @@ body {
 
 /* card top band */
 .card-top-band {
-  background: linear-gradient(135deg, var(--sage) 0%, var(--sage-lt) 100%);
+  background: linear-gradient(135deg, var(--brown) 0%, var(--brown-lt) 100%);
   padding: clamp(28px,6vw,44px) clamp(20px,5vw,40px) clamp(20px,5vw,36px);
   text-align: center;
   position: relative;
@@ -190,8 +191,15 @@ body {
 .card-top-band::before {
   content: '';
   position: absolute; inset: 0;
-  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 C20 15,10 20,5 30 C10 40,20 45,30 55 C40 45,50 40,55 30 C50 20,40 15,30 5Z' fill='%23ffffff08'/%3E%3C/svg%3E") repeat;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 C20 15,10 20,5 30 C10 40,20 45,30 55 C40 45,50 40,55 30 C50 20,40 15,30 5Z' fill='%23ffffff06'/%3E%3C/svg%3E") repeat;
   pointer-events: none;
+}
+
+/* gold ornament strip across top of card-top-band */
+.gold-strip {
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, var(--gold-lt), var(--gold), var(--gold-lt), transparent);
 }
 
 .eyebrow {
@@ -210,7 +218,7 @@ body {
   color: var(--white);
   line-height: 1.1;
   display: block;
-  text-shadow: 0 2px 16px rgba(0,0,0,0.15);
+  text-shadow: 0 2px 16px rgba(0,0,0,0.2);
 }
 .amp {
   font-family: 'Great Vibes', cursive;
@@ -221,15 +229,15 @@ body {
 }
 
 .top-ornament { margin-top: 14px; }
-.top-ornament svg { width: clamp(100px,45vw,160px); opacity: 0.7; }
+.top-ornament svg { width: clamp(100px,45vw,160px); opacity: 0.8; }
 
 /* card body */
-.card-body { padding: clamp(20px,5vw,36px); }
+.card-body { padding: clamp(20px,5vw,36px); background: var(--cream); }
 
 .section-label {
   font-family: 'Cinzel', serif;
   font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase;
-  color: var(--gold); text-align: center;
+  color: var(--gold-deep); text-align: center;
   margin-bottom: 6px;
 }
 
@@ -248,22 +256,29 @@ body {
   display:flex; align-items:center; gap:10px;
   margin: 18px 0;
 }
-.div-line hr { flex:1; border:none; border-top: 1px solid var(--mint-deep); }
+.div-line hr { flex:1; border:none; border-top: 1px solid var(--latte-deep); }
 .div-line span { color:var(--gold); font-size:0.9rem; }
 
 /* date block */
 .date-block {
-  background: linear-gradient(135deg, var(--mint) 0%, var(--ivory) 100%);
-  border: 1px solid var(--sage-pale);
+  background: linear-gradient(135deg, #fdf6ec 0%, var(--ivory) 100%);
+  border: 1px solid var(--brown-pale);
   border-radius: 14px;
   padding: clamp(16px,4vw,24px);
   text-align: center;
   margin-bottom: 18px;
+  position: relative;
+  overflow: hidden;
+}
+.date-block::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
 }
 .date-num {
   font-family: 'Cinzel', serif;
   font-size: clamp(3rem, 12vw, 5rem);
-  color: var(--sage);
+  color: var(--brown);
   line-height: 1;
   font-weight: 500;
 }
@@ -278,7 +293,7 @@ body {
 .date-time {
   font-family: 'Cinzel', serif;
   font-size: clamp(0.7rem, 2vw, 0.82rem);
-  color: var(--gold);
+  color: var(--gold-deep);
   letter-spacing: 0.2em;
   margin-top: 8px;
 }
@@ -292,7 +307,7 @@ body {
 }
 .info-c {
   background: var(--ivory);
-  border: 1px solid var(--sage-pale);
+  border: 1px solid var(--brown-pale);
   border-radius: 12px;
   padding: clamp(12px,3vw,18px) 12px;
   text-align: center;
@@ -301,7 +316,7 @@ body {
 .info-c .ic-lbl {
   font-family: 'Cinzel', serif;
   font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase;
-  color: var(--gold); display:block; margin-bottom:4px;
+  color: var(--gold-deep); display:block; margin-bottom:4px;
 }
 .info-c .ic-val {
   font-family: 'Cormorant Garamond', serif;
@@ -314,7 +329,7 @@ body {
 .map-btn {
   display: flex; align-items: center; justify-content: center; gap: 10px;
   width: 100%;
-  background: var(--sage);
+  background: var(--brown);
   color: var(--white);
   border: none;
   border-radius: 50px;
@@ -326,15 +341,23 @@ body {
   cursor: pointer;
   text-decoration: none;
   transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
-  box-shadow: 0 4px 20px rgba(74,124,89,0.3);
+  box-shadow: 0 4px 20px rgba(107,63,42,0.35);
   margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
 }
-.map-btn:hover { background: var(--sage-lt); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(74,124,89,0.4); }
+.map-btn::after {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: 50px;
+  border: 1px solid rgba(232,192,96,0.4);
+}
+.map-btn:hover { background: var(--brown-lt); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(107,63,42,0.45); }
 .map-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
 
 /* countdown */
 .countdown-wrap {
-  background: linear-gradient(135deg, var(--sage) 0%, #3d6b4c 100%);
+  background: linear-gradient(135deg, var(--brown) 0%, #4a2515 100%);
   border-radius: 14px;
   padding: clamp(16px,4vw,22px) clamp(12px,3vw,18px);
   margin-bottom: 18px;
@@ -342,8 +365,13 @@ body {
 }
 .countdown-wrap::before {
   content:'';
+  position:absolute; top:0; left:0; right:0; height:2px;
+  background: linear-gradient(90deg, transparent, var(--gold-lt), transparent);
+}
+.countdown-wrap::after {
+  content:'';
   position:absolute; inset:0;
-  background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='18' fill='none' stroke='%23ffffff08' stroke-width='1'/%3E%3C/svg%3E") repeat;
+  background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='18' fill='none' stroke='%23ffffff05' stroke-width='1'/%3E%3C/svg%3E") repeat;
 }
 .countdown-label {
   font-family: 'Cinzel', serif;
@@ -359,7 +387,8 @@ body {
 }
 .cd-unit {
   text-align: center;
-  background: rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(232,192,96,0.2);
   border-radius: 10px;
   padding: 10px 4px;
   backdrop-filter: blur(4px);
@@ -394,13 +423,13 @@ body {
   color: var(--ink-soft);
   line-height: 1.75;
 }
-.quote-text::before { content: '\201C'; color: var(--sage-pale); font-size: 2.5rem; line-height:0; vertical-align:-0.65rem; margin-right:3px; }
-.quote-text::after  { content: '\201D'; color: var(--sage-pale); font-size: 2.5rem; line-height:0; vertical-align:-0.65rem; margin-left:3px; }
+.quote-text::before { content: '\201C'; color: var(--brown-pale); font-size: 2.5rem; line-height:0; vertical-align:-0.65rem; margin-right:3px; }
+.quote-text::after  { content: '\201D'; color: var(--brown-pale); font-size: 2.5rem; line-height:0; vertical-align:-0.65rem; margin-left:3px; }
 
 .family-note {
   font-family: 'Cinzel', serif;
   font-size: 0.58rem; letter-spacing: 0.28em; text-transform: uppercase;
-  color: var(--gold); text-align: center;
+  color: var(--gold-deep); text-align: center;
   margin-top: 16px;
 }
 
@@ -408,8 +437,8 @@ body {
 .close-btn {
   position: absolute; top: 12px; right: 12px;
   width: 34px; height: 34px;
-  background: rgba(255,255,255,0.2);
-  border: 1px solid rgba(255,255,255,0.35);
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
   border-radius: 50%;
   cursor: pointer;
   color: white; font-size: 0.85rem;
@@ -417,23 +446,24 @@ body {
   transition: background 0.2s, transform 0.25s;
   z-index: 10;
 }
-.close-btn:hover { background: rgba(255,255,255,0.35); transform: rotate(90deg); }
+.close-btn:hover { background: rgba(255,255,255,0.3); transform: rotate(90deg); }
 
 /* music button */
 #musicBtn {
   position: fixed; bottom: 20px; right: 20px; z-index: 200;
   width: 46px; height: 46px;
-  background: var(--sage);
+  background: var(--brown);
   border-radius: 50%;
-  border: none; cursor: pointer;
-  color: white; font-size: 1.2rem;
+  border: 2px solid var(--gold-lt);
+  cursor: pointer;
+  color: var(--gold-lt); font-size: 1.2rem;
   display: none;
   align-items: center; justify-content: center;
-  box-shadow: 0 4px 20px rgba(74,124,89,0.45);
+  box-shadow: 0 4px 20px rgba(107,63,42,0.5);
   animation: breathe 2.5s ease-in-out infinite;
   transition: background 0.2s;
 }
-#musicBtn:hover { background: var(--sage-lt); }
+#musicBtn:hover { background: var(--brown-lt); }
 #musicBtn.show { display: flex; }
 @keyframes breathe { 0%,100%{transform:scale(1);} 50%{transform:scale(1.1);} }
 
@@ -460,7 +490,7 @@ body {
       <div class="f-left"></div>
       <div class="f-right"></div>
       <div class="f-top"></div>
-      <div class="seal">🌿</div>
+      <div class="seal">♛</div>
     </div>
   </div>
 </div>
@@ -469,8 +499,9 @@ body {
 <div id="overlay" onclick="handleOverlayClick(event)">
   <div class="card" id="card">
 
-    <!-- green header -->
+    <!-- brown header -->
     <div class="card-top-band">
+      <div class="gold-strip"></div>
       <button class="close-btn" onclick="closeCard()">✕</button>
       <div class="eyebrow">— Trân trọng kính mời —</div>
       <div class="names-wrap">
@@ -480,11 +511,11 @@ body {
       </div>
       <div class="top-ornament">
         <svg viewBox="0 0 180 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <line x1="0" y1="14" x2="60" y2="14" stroke="rgba(220,201,138,0.6)" stroke-width="0.8"/>
-          <circle cx="72" cy="14" r="3" fill="rgba(220,201,138,0.7)"/>
-          <path d="M90 5 Q96 0 102 5 Q108 10 90 18 Q72 10 78 5 Q84 0 90 5Z" fill="rgba(220,201,138,0.5)"/>
-          <circle cx="108" cy="14" r="3" fill="rgba(220,201,138,0.7)"/>
-          <line x1="120" y1="14" x2="180" y2="14" stroke="rgba(220,201,138,0.6)" stroke-width="0.8"/>
+          <line x1="0" y1="14" x2="60" y2="14" stroke="rgba(232,192,96,0.7)" stroke-width="0.8"/>
+          <circle cx="72" cy="14" r="3" fill="rgba(232,192,96,0.8)"/>
+          <path d="M90 5 Q96 0 102 5 Q108 10 90 18 Q72 10 78 5 Q84 0 90 5Z" fill="rgba(232,192,96,0.6)"/>
+          <circle cx="108" cy="14" r="3" fill="rgba(232,192,96,0.8)"/>
+          <line x1="120" y1="14" x2="180" y2="14" stroke="rgba(232,192,96,0.7)" stroke-width="0.8"/>
         </svg>
       </div>
     </div>
@@ -520,7 +551,6 @@ body {
       </div>
 
       <!-- map button -->
-      <!-- 🗺️ THAY tọa độ hoặc địa chỉ nhà hàng vào link dưới -->
       <a class="map-btn"
          href="https://www.google.com/maps/search/?api=1&query=Nhà+Hàng+Hoa+Viên+123+Lê+Lợi+Quận+1+Hồ+Chí+Minh"
          target="_blank" rel="noopener">
@@ -551,40 +581,40 @@ body {
 
       <p class="family-note">✦ Gia đình hai họ trân trọng kính mời ✦</p>
 
-    </div><!-- /card-body -->
-  </div><!-- /card -->
-</div><!-- /overlay -->
+    </div>
+  </div>
+</div>
 
-<!-- music toggle -->
 <button id="musicBtn" onclick="toggleMusic()" title="Nhạc nền">♪</button>
 
-<!-- ════════════════════════════════════════
-     🎵 NHẠC NỀN — thay tên file nhạc vào src bên dưới
-     Ví dụ: src="nhac_dam_cuoi.mp3"
-     ════════════════════════════════════════ -->
 <audio id="bgMusic" loop>
   <source src="./leduong.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-/* ── Leaves ── */
 (function(){
   const w = document.getElementById('leaves');
-  const colors = ['#6b9e78','#4a7c59','#8ab89a','#a0c8a0'];
+  const colors = ['#8b5a3c','#6b3f2a','#c9962a','#a07820','#d4b8a8'];
   for(let i=0;i<16;i++){
     const d = document.createElement('div');
     d.className='lf';
     d.style.left = Math.random()*100+'vw';
-    const sz = 8+Math.random()*10;
+    const sz = 6+Math.random()*8;
     const c = colors[Math.floor(Math.random()*colors.length)];
-    d.innerHTML=`<svg width="${sz}" height="${sz*1.4}" viewBox="0 0 10 14"><path d="M5 1 C2 4,0 8,5 13 C10 8,8 4,5 1Z" fill="${c}" opacity="${0.3+Math.random()*0.3}"/></svg>`;
+    // petals / rose shapes
+    const shapes = [
+      `<ellipse cx="5" cy="7" rx="4" ry="6" fill="${c}" opacity="${0.25+Math.random()*0.25}"/>`,
+      `<path d="M5 1 C2 4,0 8,5 13 C10 8,8 4,5 1Z" fill="${c}" opacity="${0.25+Math.random()*0.25}"/>`,
+      `<path d="M5 2 Q8 0 10 5 Q8 10 5 12 Q2 10 0 5 Q2 0 5 2Z" fill="${c}" opacity="${0.25+Math.random()*0.25}"/>`
+    ];
+    const shape = shapes[Math.floor(Math.random()*shapes.length)];
+    d.innerHTML=`<svg width="${sz}" height="${sz*1.4}" viewBox="0 0 10 14">${shape}</svg>`;
     d.style.animationDuration=(7+Math.random()*9)+'s';
     d.style.animationDelay=(Math.random()*12)+'s';
     w.appendChild(d);
   }
 })();
 
-/* ── Envelope ── */
 function openEnv(){
   document.getElementById('env').classList.add('open');
   setTimeout(()=>{
@@ -595,7 +625,6 @@ function openEnv(){
 
 function closeCard(){
   document.getElementById('overlay').classList.remove('show');
-  // reset envelope so user can click again
   setTimeout(()=>{
     document.getElementById('env').classList.remove('open');
   }, 400);
@@ -605,18 +634,13 @@ function handleOverlayClick(e){
   if(e.target === document.getElementById('overlay')) closeCard();
 }
 
-/* ── Countdown ── */
-// 🗓️ Đổi ngày cưới ở đây: new Date('YYYY-MM-DDTHH:MM:SS')
 const weddingDate = new Date('2026-12-15T11:00:00');
 
 function updateCD(){
   const now  = new Date();
   const diff = weddingDate - now;
   if(diff <= 0){
-    document.getElementById('cd-d').textContent='0';
-    document.getElementById('cd-h').textContent='0';
-    document.getElementById('cd-m').textContent='0';
-    document.getElementById('cd-s').textContent='0';
+    ['cd-d','cd-h','cd-m','cd-s'].forEach(id=>document.getElementById(id).textContent='0');
     return;
   }
   const d = Math.floor(diff/864e5);
@@ -631,19 +655,12 @@ function updateCD(){
 updateCD();
 setInterval(updateCD,1000);
 
-/* ── Music ── */
 const audio = document.getElementById('bgMusic');
 const btn   = document.getElementById('musicBtn');
 
 function startMusic(){
   audio.volume=0.5;
-  audio.play().then(()=>{
-    btn.classList.add('show');
-    btn.textContent='♪';
-  }).catch(()=>{
-    btn.classList.add('show');
-    btn.textContent='♪';
-  });
+  audio.play().then(()=>{ btn.classList.add('show'); btn.textContent='♪'; }).catch(()=>{ btn.classList.add('show'); btn.textContent='♪'; });
 }
 
 function toggleMusic(){
