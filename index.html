@@ -34,6 +34,70 @@ body {
   overflow-x: hidden;
 }
 
+/* ── LOADING SCREEN ── */
+#loading-screen {
+  position: fixed; inset: 0; z-index: 9999;
+  background: radial-gradient(ellipse at 30% 20%, #c9b09a 0%, #d9c4b0 40%, #c8b098 100%);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 26px;
+  transition: opacity 0.9s ease, visibility 0.9s ease;
+}
+#loading-screen.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+
+.ld-flowers {
+  font-size: clamp(2rem, 8vw, 3rem);
+  color: var(--brown);
+  animation: ld-pulse 2.2s ease-in-out infinite;
+  user-select: none;
+}
+@keyframes ld-pulse { 0%,100%{transform:scale(1);opacity:0.7;} 50%{transform:scale(1.1);opacity:1;} }
+
+.ld-names {
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(1.8rem, 7vw, 2.6rem);
+  color: var(--ink);
+  text-align: center;
+  line-height: 1.5;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+.ld-amp { color: var(--gold); }
+
+.ld-bar-wrap { width: min(260px, 70vw); }
+
+.ld-track {
+  width: 100%; height: 3px;
+  background: rgba(107,63,42,0.18);
+  border-radius: 99px; overflow: hidden;
+  margin-bottom: 10px;
+}
+.ld-fill {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--gold-deep), var(--gold-lt), var(--gold-deep));
+  background-size: 200%;
+  border-radius: 99px;
+  transition: width 0.1s linear;
+  animation: ld-shimmer 1.6s linear infinite;
+}
+@keyframes ld-shimmer { 0%{background-position:100%;} 100%{background-position:-100%;} }
+
+.ld-pct {
+  font-family: 'Cinzel', serif;
+  font-size: 0.68rem; letter-spacing: 0.35em;
+  color: var(--brown); text-align: center;
+}
+
+.ld-hint {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(0.85rem, 2.5vw, 1rem);
+  font-style: italic;
+  color: var(--brown-lt);
+  letter-spacing: 0.05em;
+  text-align: center;
+  transition: opacity 0.4s ease;
+  min-height: 1.4em;
+}
+
 /* ── Petal particles ── */
 .leaf-wrap { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
 .lf {
@@ -97,7 +161,6 @@ body {
   line-height: 1.4;
 }
 
-/* flaps */
 .f-bot {
   position:absolute; bottom:0; left:0; right:0; height:54%;
   background: linear-gradient(170deg, #b8906a 0%, #a07050 100%);
@@ -125,7 +188,6 @@ body {
   z-index: 6;
 }
 
-/* seal */
 .seal {
   position:absolute; top:38%; left:50%;
   transform: translate(-50%,-50%);
@@ -140,7 +202,6 @@ body {
   font-size: 1.3rem;
 }
 
-/* open animation */
 .envelope.open .f-top { transform: rotateX(180deg); z-index:5; }
 .envelope.open .seal { transform: translate(-50%,-50%) scale(0); opacity:0; }
 .envelope.open .env-preview { animation: riseCard 0.75s 0.45s cubic-bezier(0.22,1,0.36,1) both; }
@@ -180,7 +241,6 @@ body {
   to   { transform: none; opacity:1; }
 }
 
-/* card top band */
 .card-top-band {
   background: linear-gradient(135deg, var(--brown) 0%, var(--brown-lt) 100%);
   padding: clamp(28px,6vw,44px) clamp(20px,5vw,40px) clamp(20px,5vw,36px);
@@ -195,7 +255,6 @@ body {
   pointer-events: none;
 }
 
-/* gold ornament strip across top of card-top-band */
 .gold-strip {
   position: absolute; top: 0; left: 0; right: 0;
   height: 4px;
@@ -231,7 +290,6 @@ body {
 .top-ornament { margin-top: 14px; }
 .top-ornament svg { width: clamp(100px,45vw,160px); opacity: 0.8; }
 
-/* card body */
 .card-body { padding: clamp(20px,5vw,36px); background: var(--cream); }
 
 .section-label {
@@ -251,7 +309,6 @@ body {
   margin-bottom: 22px;
 }
 
-/* divider */
 .div-line {
   display:flex; align-items:center; gap:10px;
   margin: 18px 0;
@@ -259,7 +316,6 @@ body {
 .div-line hr { flex:1; border:none; border-top: 1px solid var(--latte-deep); }
 .div-line span { color:var(--gold); font-size:0.9rem; }
 
-/* date block */
 .date-block {
   background: linear-gradient(135deg, #fdf6ec 0%, var(--ivory) 100%);
   border: 1px solid var(--brown-pale);
@@ -298,7 +354,6 @@ body {
   margin-top: 8px;
 }
 
-/* info cards */
 .info-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -325,7 +380,6 @@ body {
   line-height: 1.45;
 }
 
-/* map button */
 .map-btn {
   display: flex; align-items: center; justify-content: center; gap: 10px;
   width: 100%;
@@ -355,7 +409,6 @@ body {
 .map-btn:hover { background: var(--brown-lt); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(107,63,42,0.45); }
 .map-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
 
-/* countdown */
 .countdown-wrap {
   background: linear-gradient(135deg, var(--brown) 0%, #4a2515 100%);
   border-radius: 14px;
@@ -411,7 +464,6 @@ body {
   display: block;
 }
 
-/* quote */
 .quote-wrap {
   text-align: center;
   padding: 4px 8px 0;
@@ -433,7 +485,6 @@ body {
   margin-top: 16px;
 }
 
-/* close button */
 .close-btn {
   position: absolute; top: 12px; right: 12px;
   width: 34px; height: 34px;
@@ -448,7 +499,6 @@ body {
 }
 .close-btn:hover { background: rgba(255,255,255,0.3); transform: rotate(90deg); }
 
-/* music button */
 #musicBtn {
   position: fixed; bottom: 20px; right: 20px; z-index: 200;
   width: 46px; height: 46px;
@@ -475,6 +525,17 @@ body {
 </head>
 <body>
 
+<!-- ── LOADING SCREEN ── -->
+<div id="loading-screen">
+  <div class="ld-flowers">✦ ♛ ✦</div>
+  <div class="ld-names">Thanh Hải <span class="ld-amp">&amp;</span> Mỹ Duyên</div>
+  <div class="ld-bar-wrap">
+    <div class="ld-track"><div class="ld-fill" id="ld-fill"></div></div>
+    <div class="ld-pct" id="ld-pct">0%</div>
+  </div>
+  <div class="ld-hint" id="ld-hint">Đang chuẩn bị thiệp cưới...</div>
+</div>
+
 <div class="leaf-wrap" id="leaves"></div>
 
 <!-- envelope stage -->
@@ -499,7 +560,6 @@ body {
 <div id="overlay" onclick="handleOverlayClick(event)">
   <div class="card" id="card">
 
-    <!-- brown header -->
     <div class="card-top-band">
       <div class="gold-strip"></div>
       <button class="close-btn" onclick="closeCard()">✕</button>
@@ -520,7 +580,6 @@ body {
       </div>
     </div>
 
-    <!-- body -->
     <div class="card-body">
 
       <p class="invite-text">
@@ -528,7 +587,6 @@ body {
         đến dự tiệc Tân Hôn của chúng tôi
       </p>
 
-      <!-- date -->
       <div class="section-label">Ngày trọng đại</div>
       <div class="date-block">
         <div class="date-num">15</div>
@@ -536,7 +594,6 @@ body {
         <div class="date-time">Thứ Bảy &nbsp;·&nbsp; 11:00 Sáng</div>
       </div>
 
-      <!-- info -->
       <div class="info-row">
         <div class="info-c">
           <div class="ic-ico">🕐</div>
@@ -550,7 +607,6 @@ body {
         </div>
       </div>
 
-      <!-- map button -->
       <a class="map-btn"
          href="https://www.google.com/maps/search/?api=1&query=Nhà+Hàng+Hoa+Viên+123+Lê+Lợi+Quận+1+Hồ+Chí+Minh"
          target="_blank" rel="noopener">
@@ -561,7 +617,6 @@ body {
         Xem bản đồ địa điểm
       </a>
 
-      <!-- countdown -->
       <div class="countdown-wrap">
         <div class="countdown-label">⏳ Đếm ngược đến ngày cưới</div>
         <div class="cd-grid">
@@ -574,7 +629,6 @@ body {
 
       <div class="div-line"><hr><span>❧</span><hr></div>
 
-      <!-- quote -->
       <div class="quote-wrap">
         <p class="quote-text">Tình yêu không phải nhìn nhau, mà cùng nhau nhìn về một hướng</p>
       </div>
@@ -592,6 +646,55 @@ body {
 </audio>
 
 <script>
+/* ── LOADING SCREEN ── */
+(function(){
+  const fill   = document.getElementById('ld-fill');
+  const pctEl  = document.getElementById('ld-pct');
+  const scr    = document.getElementById('loading-screen');
+  const hintEl = document.getElementById('ld-hint');
+
+  const hints = [
+    'Đang chuẩn bị thiệp cưới...',
+    'Gói yêu thương vào từng trang...',
+    'Chờ chút nữa nhé...',
+    'Sắp sẵn sàng rồi...'
+  ];
+  let hi = 0, pct = 0, done = false;
+
+  const hintTimer = setInterval(() => {
+    hintEl.style.opacity = '0';
+    setTimeout(() => {
+      hintEl.textContent = hints[hi++ % hints.length];
+      hintEl.style.opacity = '1';
+    }, 400);
+  }, 2000);
+
+  const iv = setInterval(() => {
+    if (done) return;
+    const step = pct < 70 ? (1.2 + Math.random() * 2.2) : (Math.random() * 0.7);
+    pct = Math.min(pct + step, 99);
+    fill.style.width = pct + '%';
+    pctEl.textContent = Math.floor(pct) + '%';
+  }, 60);
+
+  function finish() {
+    if (done) return;
+    done = true;
+    clearInterval(iv);
+    clearInterval(hintTimer);
+    fill.style.transition = 'width 0.3s ease';
+    fill.style.width = '100%';
+    pctEl.textContent = '100%';
+    hintEl.textContent = 'Chào mừng đến thiệp cưới ✦';
+    setTimeout(() => scr.classList.add('hide'), 700);
+  }
+
+  window.addEventListener('load', finish);
+  /* fallback: nếu load không bắn được thì tự tắt sau 5s */
+  setTimeout(finish, 5000);
+})();
+
+/* ── Petals ── */
 (function(){
   const w = document.getElementById('leaves');
   const colors = ['#8b5a3c','#6b3f2a','#c9962a','#a07820','#d4b8a8'];
@@ -601,7 +704,6 @@ body {
     d.style.left = Math.random()*100+'vw';
     const sz = 6+Math.random()*8;
     const c = colors[Math.floor(Math.random()*colors.length)];
-    // petals / rose shapes
     const shapes = [
       `<ellipse cx="5" cy="7" rx="4" ry="6" fill="${c}" opacity="${0.25+Math.random()*0.25}"/>`,
       `<path d="M5 1 C2 4,0 8,5 13 C10 8,8 4,5 1Z" fill="${c}" opacity="${0.25+Math.random()*0.25}"/>`,
@@ -615,6 +717,7 @@ body {
   }
 })();
 
+/* ── Envelope ── */
 function openEnv(){
   document.getElementById('env').classList.add('open');
   setTimeout(()=>{
@@ -634,11 +737,11 @@ function handleOverlayClick(e){
   if(e.target === document.getElementById('overlay')) closeCard();
 }
 
+/* ── Countdown ── */
 const weddingDate = new Date('2026-12-15T11:00:00');
 
 function updateCD(){
-  const now  = new Date();
-  const diff = weddingDate - now;
+  const diff = weddingDate - new Date();
   if(diff <= 0){
     ['cd-d','cd-h','cd-m','cd-s'].forEach(id=>document.getElementById(id).textContent='0');
     return;
@@ -655,12 +758,15 @@ function updateCD(){
 updateCD();
 setInterval(updateCD,1000);
 
+/* ── Music ── */
 const audio = document.getElementById('bgMusic');
 const btn   = document.getElementById('musicBtn');
 
 function startMusic(){
   audio.volume=0.5;
-  audio.play().then(()=>{ btn.classList.add('show'); btn.textContent='♪'; }).catch(()=>{ btn.classList.add('show'); btn.textContent='♪'; });
+  audio.play().catch(()=>{});
+  btn.classList.add('show');
+  btn.textContent='♪';
 }
 
 function toggleMusic(){
